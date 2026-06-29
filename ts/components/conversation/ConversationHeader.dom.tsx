@@ -181,6 +181,8 @@ export type PropsActionsType = {
 
   acknowledgeGroupMemberNameCollisions: AcknowledgeGroupMemberNameCollisions;
   reviewConversationNameCollision: ReviewConversationNameCollission;
+
+  onBack: () => void;
 };
 
 export type PropsHousekeepingType = {
@@ -239,6 +241,8 @@ export const ConversationHeader = memo(function ConversationHeader({
   renderMiniPlayer,
 
   renderPinnedMessagesBar,
+
+  onBack,
 }: PropsType): JSX.Element | null {
   // Comes from a third-party dependency
   const headerRef = useRef<HTMLDivElement>(null);
@@ -326,7 +330,16 @@ export const ConversationHeader = memo(function ConversationHeader({
         )}
       >
         <AxoDragRegion.Root>
-          <div className="module-ConversationHeader">
+          <div className={'module-ConversationHeader ' + tw(`pl-4`)}>
+            <AxoIconButton.Root
+              symbol="chevron-[start]"
+              size="md"
+              iconWeight={300}
+              onClick={onBack}
+              label={i18n('icu:goBack')}
+              variant="borderless-secondary"
+            />
+
             <HeaderContent
               conversation={conversation}
               badge={badge ?? null}

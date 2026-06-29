@@ -66,10 +66,13 @@ export const SmartChatsTab = memo(function SmartChatsTab() {
     if (selectedConversationId !== lastOpenedConversationId.current) {
       if (lastOpenedConversationId.current) {
         saveDraftRecordingIfNeeded(lastOpenedConversationId.current);
-        onConversationClosed(
-          lastOpenedConversationId.current,
-          'ChatsTab opened another chat'
-        );
+        // keep loaded when going back to chat list, for "search in conversation"
+        if (selectedConversationId) {
+          onConversationClosed(
+            lastOpenedConversationId.current,
+            'ChatsTab opened another chat'
+          );
+        }
       }
       updateChatFolderStateOnTargetConversationChanged(selectedConversationId);
 

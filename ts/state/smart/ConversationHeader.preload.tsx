@@ -52,6 +52,7 @@ import { SmartMiniPlayer } from './MiniPlayer.preload.tsx';
 import { SmartPinnedMessagesBar } from './PinnedMessagesBar.preload.tsx';
 import { getContactSpoofingWarningSelector } from '../selectors/timeline.preload.ts';
 import { useNavActions } from '../ducks/nav.std.ts';
+import { NavTab } from '../../types/Nav.std.ts';
 
 function renderCollidingAvatars(
   props: SmartCollidingAvatarsProps
@@ -152,7 +153,7 @@ export const SmartConversationHeader = memo(function SmartConversationHeader({
     acknowledgeGroupMemberNameCollisions,
     reviewConversationNameCollision,
   } = useConversationsActions();
-  const { pushPanelForConversation } = useNavActions();
+  const { changeLocation, pushPanelForConversation } = useNavActions();
   const {
     onOutgoingAudioCallInConversation,
     onOutgoingVideoCallInConversation,
@@ -257,9 +258,14 @@ export const SmartConversationHeader = memo(function SmartConversationHeader({
     onOutgoingVideoCallInConversation(conversation.id);
   }, [onOutgoingVideoCallInConversation, conversation.id]);
 
+  const onBack = useCallback(() => {
+    changeLocation({ tab: NavTab.Chats, details: {} }); // no conversationId
+  }, [changeLocation]);
+
   const onSearchInConversation = useCallback(() => {
     searchInConversation(conversation.id);
-  }, [searchInConversation, conversation.id]);
+    onBack();
+  }, [searchInConversation, conversation.id, changeLocation]);
 
   const onSelectModeEnter = useCallback(() => {
     toggleSelectMode(true);
@@ -340,6 +346,7 @@ export const SmartConversationHeader = memo(function SmartConversationHeader({
         acknowledgeGroupMemberNameCollisions
       }
       reviewConversationNameCollision={reviewConversationNameCollision}
+      onBack={onBack}
     />
   );
 });

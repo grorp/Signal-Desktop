@@ -98,6 +98,7 @@ export function changeLocation(
       return;
     }
 
+    // console.log("changeLocation called: prev: ", existingLocation, ", target: ", newLocation);
     dispatch({
       type: CHANGE_LOCATION,
       payload: { selectedLocation: newLocation },
@@ -302,6 +303,8 @@ export function reducer(
       selectedLocation = state.lastChatTabLocation;
     }
 
+    // console.log("CHANGE_LOCATION received: prev: ", state.selectedLocation, ", target: ", selectedLocation);
+  
     return {
       ...state,
       selectedLocation,
