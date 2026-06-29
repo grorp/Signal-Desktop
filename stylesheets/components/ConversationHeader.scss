@@ -38,13 +38,13 @@
   height: calc(#{variables.$header-height} + var(--title-bar-drag-area-height));
 
   &__header {
-    $padding: 4px 12px;
+    $padding: 4px 12px 4px 0;
 
     align-items: center;
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    margin-inline: 4px;
+    margin-inline-end: 4px;
     padding: $padding;
     overflow: hidden;
     min-width: 0;
@@ -58,7 +58,7 @@
         -webkit-app-region: no-drag;
 
         // These are clobbered by button-reset:
-        margin-inline: 4px;
+        margin-inline-end: 4px;
         padding: $padding;
         padding-inline-start: 0;
       }

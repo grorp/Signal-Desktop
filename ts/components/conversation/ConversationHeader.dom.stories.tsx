@@ -104,6 +104,8 @@ const commonProps: PropsType = {
   renderMiniPlayer,
 
   renderPinnedMessagesBar,
+
+  onBack: action('onBack'),
 };
 
 export function PrivateConvo(): JSX.Element {

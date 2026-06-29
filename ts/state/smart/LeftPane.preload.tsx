@@ -84,6 +84,7 @@ import {
   getIsActivelySearching,
   getIsSearching,
   getIsSearchingGlobally,
+  getIsSearchingInAConversation,
   getQuery,
   getSearchConversation,
   getSearchResults,
@@ -210,7 +211,8 @@ const getModeSpecificProps: StateSelector<ModeSpecificProps> = createSelector(
               : {}),
           };
         }
-        if (getIsActivelySearching(state)) {
+        // don't show conversation list when "searching in a conversation" and no search query has been entered yet
+        if (getIsActivelySearching(state) || getIsSearchingInAConversation(state)) {
           return {
             mode: LeftPaneMode.Search,
             isSearchingGlobally: getIsSearchingGlobally(state),

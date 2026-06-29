@@ -5,10 +5,8 @@ import type { JSX } from 'react';
 
 import type { LocalizerType } from '../types/I18N.std.ts';
 import type { NavTabPanelProps } from './NavTabs.dom.tsx';
-import { WhatsNewLink } from './WhatsNewLink.dom.tsx';
 import type { UnreadStats } from '../util/countUnreadStats.std.ts';
 import type { SmartConversationViewProps } from '../state/smart/ConversationView.preload.tsx';
-import { tw } from '../axo/tw.dom.tsx';
 
 export type ChatsTabProps = Readonly<{
   otherTabsUnreadStats: UnreadStats;
@@ -27,32 +25,19 @@ export type ChatsTabProps = Readonly<{
 
 export function ChatsTab({
   otherTabsUnreadStats,
-  i18n,
-  isStaging,
   hasPendingUpdate,
   hasFailedStorySends,
   navTabsCollapsed,
   onToggleNavTabsCollapse,
   renderConversationView,
   renderLeftPane,
-  renderMiniPlayer,
   selectedConversationId,
-  showWhatsNewModal,
 }: ChatsTabProps): JSX.Element {
   return (
     <>
-      <div id="LeftPane">
-        {renderLeftPane({
-          otherTabsUnreadStats,
-          collapsed: navTabsCollapsed,
-          hasPendingUpdate,
-          hasFailedStorySends,
-          onToggleCollapse: onToggleNavTabsCollapse,
-        })}
-      </div>
-      <div className="Inbox__conversation-stack">
-        <div id="toast" />
-        {selectedConversationId ? (
+      {selectedConversationId ? (
+        <div className="Inbox__conversation-stack">
+          <div id="toast" />
           <div
             // Use `key` to force the tree to fully re-mount
             key={selectedConversationId}
@@ -61,25 +46,16 @@ export function ChatsTab({
           >
             {renderConversationView({ selectedConversationId })}
           </div>
-        ) : (
-          <div className="Inbox__no-conversation-open">
-            {renderMiniPlayer({ shouldFlow: false })}
-            <div className="module-splash-screen__logo module-splash-screen__logo--96" />
-            <h3 className="Inbox__welcome">
-              {isStaging
-                ? 'THIS IS A STAGING DESKTOP'
-                : i18n('icu:welcomeToSignal')}
-            </h3>
-            <p className="Inbox__whatsnew">
-              <WhatsNewLink i18n={i18n} showWhatsNewModal={showWhatsNewModal} />
-            </p>
-            <div className="Inbox__padding" />
-            <div className={tw('absolute bottom-0 p-5 text-label-secondary')}>
-              {i18n('icu:signalNonProfit')}
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        renderLeftPane({
+          otherTabsUnreadStats,
+          collapsed: navTabsCollapsed,
+          hasPendingUpdate,
+          hasFailedStorySends,
+          onToggleCollapse: onToggleNavTabsCollapse,
+        })
+      )}
     </>
   );
 }

@@ -178,7 +178,7 @@ export function NavSidebar({
         className={classNames('NavSidebar', {
           'NavSidebar--narrow': widthBreakpoint === WidthBreakpoint.Narrow,
         })}
-        style={{ width }}
+        // style={{ width }}
       >
         {!hideHeader && (
           <AxoDragRegion.Root>
